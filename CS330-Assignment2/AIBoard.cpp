@@ -45,7 +45,7 @@ vector< vector<char> > AIBoard::BuildBoard() {
 	board[46][27] = '#';
 	
 	board[5][90] = 'S';		// Add Sun 1
-	board[45][10] = 'S';	// Add Sun 2
+	board[45][10] = 's';	// Add Sun 2
 
 	return board;
 }
@@ -103,6 +103,9 @@ void AIBoard::DisplayBoard(vector< vector<char> > myBoard) {
 					SetColor(10);
 					break;
 				case 'S' :		// Sun
+					SetColor(14);
+					break;
+				case 's' :		// Sun
 					SetColor(14);
 					break;
 				case 'E' :		// Enemy Ship

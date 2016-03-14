@@ -86,7 +86,7 @@ vector<vector<char>> Supply::Flee(vector<vector<char>> board){
 		state = 1;
 		return board;
 	}
-	if(board[BOARDROWS-1][0] == '-') {
+	else if(board[BOARDROWS-1][0] == '-') {
 		board[row][col] = '-';
 		row = BOARDROWS-1;
 		col = 0;
@@ -94,7 +94,7 @@ vector<vector<char>> Supply::Flee(vector<vector<char>> board){
 		state = 1;
 		return board;
 	}
-	if(board[0][BOARDCOLS-1] == '-') {
+	else if(board[0][BOARDCOLS-1] == '-') {
 		board[row][col] = '-';
 		row = 0;
 		col = BOARDCOLS-1;
@@ -102,7 +102,7 @@ vector<vector<char>> Supply::Flee(vector<vector<char>> board){
 		state = 1;
 		return board;
 	}
-	if(board[BOARDROWS-1][BOARDCOLS-1] == '-') {
+	else if(board[BOARDROWS-1][BOARDCOLS-1] == '-') {
 		board[row][col] = '-';
 		row = BOARDROWS-1;
 		col = BOARDCOLS-1;
