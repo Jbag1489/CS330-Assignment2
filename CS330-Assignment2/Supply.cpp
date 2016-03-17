@@ -160,10 +160,10 @@ vector<vector<char>> Supply::Flee(vector<vector<char>> board){
 	
 	// Enemy x is positive, y is negative relative to supply ship
 	if(enemy.col > col && enemy.row < row){
-		if(board[row-1][col-1] == '-') {
+		if(board[row-1][col+1] == '-') {
 			board[row][col] = '-';
 			row = row-1;
-			col = col-1;
+			col = col+1;
 			board[row][col]= id;
 			UpdateState(board);
 			return board;
@@ -172,9 +172,9 @@ vector<vector<char>> Supply::Flee(vector<vector<char>> board){
 	
 	// Enemy x is negative, y is positive relative to supply ship
 	if(enemy.col < col && enemy.row > row){
-		if(board[row-1][col-1] == '-') {
+		if(board[row+1][col-1] == '-') {
 			board[row][col] = '-';
-			row = row-1;
+			row = row+1;
 			col = col-1;
 			board[row][col]= id;
 			UpdateState(board);
@@ -185,9 +185,6 @@ vector<vector<char>> Supply::Flee(vector<vector<char>> board){
 	
 	// Update to new correct state
 	UpdateState(board);
-	
-
-
 	return board;
 }
 
