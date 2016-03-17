@@ -23,7 +23,7 @@ class Supply {
 		vector<vector<char>> Rendezvous(vector<vector<char>> board);
 		vector<vector<char>> ReFuel(vector<vector<char>> board);
 		int ManhattanDistance(vector<vector<char>> board, char ch);
-		int UpdateState(vector<vector<char>> board);
+		void UpdateState(vector<vector<char>> board);
 		int GetRow();
 		void SetRow(int);
 		int GetCol();
