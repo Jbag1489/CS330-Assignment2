@@ -149,6 +149,27 @@ int Supply::ManhattanDistance(vector<vector<char>> board, char ch){
 	}
 }
 
+int Supply::UpdateState(vector<vector<char>> board){
+	// If enemy within 5 units, flee from enemy.
+	if (ManhattanDistance(board, 'E') <= 5) {
+		state = 2;
+	}
+
+	// If fuel low, enter refuel state.
+	else if(fuel < 10){
+		state = 4;
+	}
+
+	else if(ManhattanDistance(board, 'P') <= 10){
+		state = 3;
+	}
+
+	// If all other states not true, roam
+	else{
+		state = 1;
+	}
+}
+
 int Supply::GetRow(){
 	return row;
 }
