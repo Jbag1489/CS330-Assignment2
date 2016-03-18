@@ -18,7 +18,7 @@ Player::~Player(){
 }
 
 vector<vector<char>> Player::Update(vector<vector<char>> board, int keyDirection){
-	if(fuel == 0){
+	if(fuel <= 10){
 		return board;
 	}
 	switch(keyDirection){
@@ -72,3 +72,12 @@ int Player::GetFuel(){
 void Player::SetFuel(int iFuel){
 	fuel = iFuel;
 }
+
+int Player::GetRow(){
+	return row;
+}
+
+int Player::GetCol(){
+	return col;
+}
+

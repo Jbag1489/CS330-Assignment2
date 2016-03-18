@@ -3,6 +3,8 @@
 //***********
 
 #include <vector>
+#include "Player.h"
+#include "Enemy.h"
 using namespace std;
 #pragma once
 
@@ -17,13 +19,12 @@ class Supply {
 	public:
 		Supply(int row, int col, int state, int fuel, char id);
 		~Supply();
-		vector<vector<char>> Update(vector<vector<char>> board);
-		vector<vector<char>> Roam(vector<vector<char>> board);
-		vector<vector<char>> Flee(vector<vector<char>> board);
-		vector<vector<char>> Rendezvous(vector<vector<char>> board);
-		vector<vector<char>> ReFuel(vector<vector<char>> board);
-		int ManhattanDistance(vector<vector<char>> board, char ch);
-		void UpdateState(vector<vector<char>> board);
+		vector<vector<char>> Update(vector<vector<char>> board, Player player, Enemy enemy);
+		vector<vector<char>> Roam(vector<vector<char>> board, int playerRow, int PlayerCol, int playerFuel, int EnemyRow, int EnemyCol);
+		vector<vector<char>> Flee(vector<vector<char>> board, int playerRow, int PlayerCol, int playerFuel, int EnemyRow, int EnemyCol);
+		vector<vector<char>> Rendezvous(vector<vector<char>> board, Player player, Enemy enemy);
+		vector<vector<char>> ReFuel(vector<vector<char>> board, Player player, Enemy enemy);
+		int ManhattanDistance(int row, int col);
 		int GetRow();
 		void SetRow(int);
 		int GetCol();

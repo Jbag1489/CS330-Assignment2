@@ -39,7 +39,7 @@ int main()
 		a = _getch();	// Wait for user direction key movement
 		keyDirection = (int)a;
 		for(int loop = 0; loop < 4 ; loop++){
-			myBoard = supply[loop].Update(myBoard);			// Update Supply Ship locations
+			myBoard = supply[loop].Update(myBoard, player, enemy);			// Update Supply Ship locations
 		}
 		myBoard = enemy.Update(myBoard);					// Update Enemy Ship location
 		myBoard = player.Update(myBoard, keyDirection);		// Update Player location

@@ -58,16 +58,8 @@ int Enemy::GetRow(){
 	return row;
 }
 
-void Enemy::SetRow(int iRow){
-	row = iRow;
-}
-
 int Enemy::GetCol(){
 	return col;
-}
-
-void Enemy::SetCol(int iCol){
-	col = iCol;
 }
 
 char Enemy::GetId(){

@@ -21,4 +21,6 @@ class Player {
 		int GetFuel();
 		void SetFuel(int);
 		int GetColor();
+		int GetRow();
+		int GetCol();
 };
