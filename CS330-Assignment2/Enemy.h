@@ -20,9 +20,7 @@ class Enemy {
 		vector<vector<char>> Roam(vector<vector<char>> board);
 		vector<vector<char>> Attack(vector<vector<char>> board);
 		int GetRow();
-		void SetRow(int);
 		int GetCol();
-		void SetCol(int);
 		char GetId();
 		void SetId(char);
 };
