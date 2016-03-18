@@ -60,7 +60,7 @@ void AIBoard::DisplayHeader(vector<Supply> supply, Player player) {
 	SetColor(10);
 	cout << "Supply (1)    Supply (2)    Supply (3)    Supply (4)    ";
 	SetColor(14);
-	cout << "(S)un    ";
+	cout << "(S)un (s)un   ";
 	SetColor(12);
 	cout << "(E)nemy    ";
 	SetColor(13);
@@ -102,10 +102,8 @@ void AIBoard::DisplayBoard(vector< vector<char> > myBoard) {
 				case '4' :		// Supply Ship 4
 					SetColor(10);
 					break;
-				case 'S' :		// Sun
-					SetColor(14);
-					break;
-				case 's' :		// Sun
+				case 'S' :		// Sun 1
+				case 's' :		// Sun 2
 					SetColor(14);
 					break;
 				case 'E' :		// Enemy Ship
