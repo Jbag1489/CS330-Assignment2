@@ -135,6 +135,73 @@ vector<vector<char>> Supply::Flee(vector<vector<char>> board, int playerRow, int
 	//
 	// TODO - Needs to be fully implemented
 	//
+	////////////////////////////////////////////////////////////////
+	
+	// Enemy Distance is within 5
+	
+	// Scan board to find enemy location
+
+	// Temp struct to have "valid" code while writing function
+	
+	
+
+	// TODO - Fix diagonal movements
+	// TODO - Add enemy on same row/col as supply ship
+	// TODO - Add in case of supply ship runs into world borders
+	// TODO - Make supply ship move in the direction that puts them at a further distance
+			// If moving down is a greater distance from enemy that moving right, move down
+	
+	// Enemy col and row both positive relative to supply ship
+	if(enemyCol > col && enemyRow > row){
+		if(board[row-1][col-1] == '-') {
+			board[row][col] = '-';
+			row = row-1;
+			col = col-1;
+			board[row][col]= id;
+			UpdateState(board);
+			return board;
+		}
+	}
+
+	// Enemy col and row both negative relative to supply ship
+	if(enemyCol < col && enemyRow < row){
+		if(board[row+1][col+1] == '-') {
+			board[row][col] = '-';
+			row = row+1;
+			col = col+1;
+			board[row][col]= id;
+			UpdateState(board);
+			return board;
+		}
+	}
+	
+	// Enemy col is positive, row is negative relative to supply ship
+	if(enemyCol > col && enemyRow < row){
+		if(board[row-1][col+1] == '-') {
+			board[row][col] = '-';
+			row = row-1;
+			col = col+1;
+			board[row][col]= id;
+			UpdateState(board);
+			return board;
+		}
+	}
+	
+	// Enemy col is negative, row is positive relative to supply ship
+	if(enemyCol < col && enemyRow > row){
+		if(board[row+1][col-1] == '-') {
+			board[row][col] = '-';
+			row = row+1;
+			col = col-1;
+			board[row][col]= id;
+			UpdateState(board);
+			return board;
+		}
+	}
+	
+	
+	// Update to new correct state
+	UpdateState(board);
 	return board;
 }
 
@@ -161,6 +228,29 @@ vector<vector<char>> Supply::ReFuel(vector<vector<char>> board, Player player, E
 int Supply::ManhattanDistance(int objRow, int objCol){
 	int manDistance = abs(row - objRow)+abs(col - objCol);
 	return manDistance;
+}
+
+void Supply::UpdateState(vector<vector<char>> board){
+	// If enemy within 5 units, flee from enemy.
+	if (ManhattanDistance() <= 5) {
+		state = 2;
+	}
+
+	// If fuel low, enter refuel state.
+	else if(fuel < 10){
+		state = 4;
+	}
+
+	// If player close, rendezvous with player
+	else if(ManhattanDistance() <= 10){
+		state = 3;
+	}
+
+	// If all other states not true, roam
+	else{
+		state = 1;
+	}
+	
 }
 
 int Supply::GetRow(){

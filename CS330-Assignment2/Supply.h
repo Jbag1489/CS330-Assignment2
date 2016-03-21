@@ -25,6 +25,7 @@ class Supply {
 		vector<vector<char>> Rendezvous(vector<vector<char>> board, Player player, Enemy enemy);
 		vector<vector<char>> ReFuel(vector<vector<char>> board, Player player, Enemy enemy);
 		int ManhattanDistance(int row, int col);
+		void UpdateState(vector<vector<char>> board);
 		int GetRow();
 		void SetRow(int);
 		int GetCol();
