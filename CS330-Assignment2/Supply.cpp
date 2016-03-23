@@ -4,6 +4,7 @@
 
 #include "Supply.h"
 #include "Definitions.h"
+#include <cmath>
 using namespace std;
 
 Supply::Supply(int iRow, int iCol, int iState, int iFuel, char cId){
@@ -93,7 +94,7 @@ vector<vector<char>> Supply::Roam(vector<vector<char>> board, int playerRow, int
 // Flee() currently sends a supply ship to a corner.
 // This is temporary code to cause supply ship to do something.
 vector<vector<char>> Supply::Flee(vector<vector<char>> board, int playerRow, int playerCol, int playerFuel, int enemyRow, int enemyCol){
-
+/*
 	int enemyDistance = ManhattanDistance(enemyRow, enemyCol);
 	if(enemyDistance >= 10){	// Is distance to Enemy >= 10?
 		state = 1;				// Change state to Roam
@@ -132,76 +133,188 @@ vector<vector<char>> Supply::Flee(vector<vector<char>> board, int playerRow, int
 		state = 1;
 		return board;
 	}
+
+*/
 	//
 	// TODO - Needs to be fully implemented
 	//
 	////////////////////////////////////////////////////////////////
-	
-	// Enemy Distance is within 5
-	
-	// Scan board to find enemy location
+	// Diagonal movements - decided to allow supply ships to move diagonally
 
-	// Temp struct to have "valid" code while writing function
-	
-	
-
-	// TODO - Fix diagonal movements
-	// TODO - Add enemy on same row/col as supply ship
-	// TODO - Add in case of supply ship runs into world borders
-	// TODO - Make supply ship move in the direction that puts them at a further distance
-			// If moving down is a greater distance from enemy that moving right, move down
-	
-	// Enemy col and row both positive relative to supply ship
-	if(enemyCol > col && enemyRow > row){
-		if(board[row-1][col-1] == '-') {
-			board[row][col] = '-';
-			row = row-1;
-			col = col-1;
-			board[row][col]= id;
-			UpdateState(board);
-			return board;
-		}
+// Find distance to enemy in each possible movement location
+		
+	double enemyDistances[8];
+	double bestMoveDistance = -100;
+	int whereToMove = -1; // Integer to hold direction to move for greatest distance from enemy
+		
+//UP = 0
+	if (row == 0){
+		// Space does not exist on board
+		enemyDistances[0] = -1;
+	}
+	else if(board[row-1][col] = '-'){
+		enemyDistances[0] = EuclidDistance(row-1, col, enemyRow, enemyCol);
+	}
+	else{
+		//Not an available space to move
+		enemyDistances[0] = -1;
 	}
 
-	// Enemy col and row both negative relative to supply ship
-	if(enemyCol < col && enemyRow < row){
-		if(board[row+1][col+1] == '-') {
-			board[row][col] = '-';
-			row = row+1;
-			col = col+1;
-			board[row][col]= id;
-			UpdateState(board);
-			return board;
+//UPRIGHT = 1
+	if (row == 0 || col == BOARDCOLS-1){
+		// Space does not exist on board
+		enemyDistances[1] = -1;
+	}
+	else if(board[row-1][col+1] = '-'){
+		enemyDistances[1] = EuclidDistance(row-1, col+1, enemyRow, enemyCol);
+	}
+	else{
+		//Not an available space to move
+		enemyDistances[1] = -1;
+	}
+
+//RIGHT = 2
+	if (col == BOARDCOLS-1){
+		// Space does not exist on board
+		enemyDistances[2] = -1;
+	}
+	else if(board[row][col+1] = '-'){
+		enemyDistances[2] = EuclidDistance(row, col+1, enemyRow, enemyCol);
+	}
+	else{
+		//Not an available space to move
+		enemyDistances[2] = -1;
+	}
+
+//DOWNRIGHT = 3
+	if (row == BOARDROWS-1 || col == BOARDCOLS-1){
+		// Space does not exist on board
+		enemyDistances[3] = -1;
+	}
+	else if(board[row+1][col+1] = '-'){
+		enemyDistances[3] = EuclidDistance(row+1, col+1, enemyRow, enemyCol);
+	}
+	else{
+		//Not an available space to move
+		enemyDistances[3] = -1;
+	}
+
+//DOWN = 4
+	if (row == BOARDROWS-1){
+		// Space does not exist on board
+		enemyDistances[4] = -1;
+	}
+	else if(board[row+1][col] = '-'){
+		enemyDistances[4] = EuclidDistance(row+1, col, enemyRow, enemyCol);
+	}
+	else{
+		//Not an available space to move
+		enemyDistances[4] = -1;
+	}
+
+//DOWNLEFT = 5
+	if (row == BOARDROWS-1 || col == 0){
+		// Space does not exist on board
+		enemyDistances[5] = -1;
+	}
+	else if(board[row+1][col-1] = '-'){
+		enemyDistances[5] = EuclidDistance(row+1, col-1, enemyRow, enemyCol);
+	}
+	else{
+		//Not an available space to move
+		enemyDistances[5] = -1;
+	}
+
+//LEFT = 6
+	if (col == 0){
+		// Space does not exist on board
+		enemyDistances[6] = -1;
+	}
+	else if(board[row][col-1] = '-'){
+		enemyDistances[6] = EuclidDistance(row, col-1, enemyRow, enemyCol);
+	}
+	else{
+		//Not an available space to move
+		enemyDistances[6] = -1;
+	}
+
+//UPLEFT = 7
+	if (row == 0 || col == 0){
+		// Space does not exist on board
+		enemyDistances[7] = -1;
+	}
+	else if(board[row-1][col-1] = '-'){
+		enemyDistances[7] = EuclidDistance(row-1, col-1, enemyRow, enemyCol);
+	}
+	else{
+		//Not an available space to move
+		enemyDistances[0] = -1;
+	}
+
+//Find greatest distance
+	for(int i=0; i < 8; i++){
+		if (enemyDistances[i] > bestMoveDistance){
+			whereToMove = i;
+			bestMoveDistance = enemyDistances[i];
 		}
 	}
-	
-	// Enemy col is positive, row is negative relative to supply ship
-	if(enemyCol > col && enemyRow < row){
-		if(board[row-1][col+1] == '-') {
-			board[row][col] = '-';
-			row = row-1;
-			col = col+1;
-			board[row][col]= id;
-			UpdateState(board);
-			return board;
-		}
+
+	switch (whereToMove){
+	case 0:
+		board[row][col] = '-';
+		row = row-1;
+		col = col;
+		board[row][col]= id;
+		break;
+	case 1:
+		board[row][col] = '-';
+		row = row-1;
+		col = col+1;
+		board[row][col]= id;
+		break;
+	case 2:
+		board[row][col] = '-';
+		row = row;
+		col = col+1;
+		board[row][col]= id;
+		break;
+	case 3:
+		board[row][col] = '-';
+		row = row+1;
+		col = col+1;
+		board[row][col]= id;
+		break;
+	case 4:
+		board[row][col] = '-';
+		row = row+1;
+		col = col;
+		board[row][col]= id;
+		break;
+	case 5:
+		board[row][col] = '-';
+		row = row+1;
+		col = col-1;
+		board[row][col]= id;
+		break;
+	case 6:
+		board[row][col] = '-';
+		row = row;
+		col = col-1;
+		board[row][col]= id;
+		break;
+	case 7:
+		board[row][col] = '-';
+		row = row-1;
+		col = col-1;
+		board[row][col]= id;
+		break;
+	default: // No movement made
+		row = row;
+		col = col;
 	}
-	
-	// Enemy col is negative, row is positive relative to supply ship
-	if(enemyCol < col && enemyRow > row){
-		if(board[row+1][col-1] == '-') {
-			board[row][col] = '-';
-			row = row+1;
-			col = col-1;
-			board[row][col]= id;
-			UpdateState(board);
-			return board;
-		}
-	}
-	
 	
 	// Update to new correct state
-	UpdateState(board);
+	UpdateState(board, playerRow, playerCol,playerFuel, enemyRow, enemyCol);
 	return board;
 }
 
@@ -230,9 +343,18 @@ int Supply::ManhattanDistance(int objRow, int objCol){
 	return manDistance;
 }
 
-void Supply::UpdateState(vector<vector<char>> board){
-	// If enemy within 5 units, flee from enemy.
-	if (ManhattanDistance() <= 5) {
+double Supply::EuclidDistance(int tempRow, int tempCol, int objRow, int objCol){
+	
+	double row = (tempRow - objRow);
+	double col = (tempCol - objCol);
+
+	double distance = sqrt( (row*row) + (col*col) );
+	return distance;
+}
+
+void Supply::UpdateState(vector<vector<char>> board, int playerRow, int playerCol, int playerFuel, int enemyRow, int enemyCol){
+	// If enemy within 10 units, flee from enemy.
+	if (ManhattanDistance(enemyRow, enemyCol) <= 10) {
 		state = 2;
 	}
 
@@ -241,8 +363,8 @@ void Supply::UpdateState(vector<vector<char>> board){
 		state = 4;
 	}
 
-	// If player close, rendezvous with player
-	else if(ManhattanDistance() <= 10){
+	// If player close and fuel low, rendezvous with player
+	else if( (ManhattanDistance(playerRow, playerCol) <= 10) && (playerFuel < 40) ){
 		state = 3;
 	}
 
